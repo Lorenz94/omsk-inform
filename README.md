@@ -1,1 +1,2 @@
 "# empty-wp" 
+"# omsk-inform" 
