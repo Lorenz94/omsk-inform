@@ -13,17 +13,7 @@ if (!isset($content_width)) {
     $content_width = 1170;
 }
 
-function load_style(){
-    wp_enqueue_style('style-css', get_template_directory_uri().'/css/style.css');
-    wp_enqueue_style('swiper-css', get_template_directory_uri() . '/css/swiper.min.css');
-    wp_enqueue_style('swiper-css', get_template_directory_uri() . '/css/fontawesome.css');
-    wp_enqueue_style('swiper-css', get_template_directory_uri() . '/css/brands.css');
-    wp_enqueue_style('swiper-css', get_template_directory_uri() . '/css/solid.css');
 
-//    wp_enqueue_style('slick-css', get_template_directory_uri() . '/css/slick.css');
-//    wp_enqueue_style('slick-css', get_template_directory_uri() . '/css/slick-theme.css');
-}
-add_action('wp_enqueue_scripts', 'load_style');
 
 
 function load_sctripts(){
@@ -32,11 +22,11 @@ function load_sctripts(){
     wp_enqueue_script('input-mask', get_template_directory_uri() . '/js/jquery.inputmask.js');
 
     //Дополнительный слайдер
-    //wp_enqueue_script('slick-js', get_template_directory_uri().'/js/slick.min.js');
+    wp_enqueue_script('slick-js', get_template_directory_uri().'/js/slick.min.js');
     //Одинаковая высота у блоков
     //wp_enqueue_script('match-height', get_template_directory_uri() . '/js/jquery.matchHeight-min.js');
 
-    wp_enqueue_script('input-mask', get_template_directory_uri() . '/js/script.js');
+    wp_enqueue_script('script', get_template_directory_uri() . '/js/script.js');
 }
 
 add_action('wp_enqueue_scripts', 'load_sctripts');
@@ -166,10 +156,8 @@ if (!function_exists('bootstrapBasicEnqueueScripts')) {
     {
         global $wp_scripts;
 
-        wp_enqueue_style('bootstrap-style', get_template_directory_uri() . '/css/bootstrap.min.css', array(), '3.3.7');
-        wp_enqueue_style('bootstrap-theme-style', get_template_directory_uri() . '/css/bootstrap-theme.min.css', array(), '3.3.7');
-        wp_enqueue_style('fontawesome-style', get_template_directory_uri() . '/css/font-awesome.min.css', array(), '4.7.0');
-        wp_enqueue_style('main-style', get_template_directory_uri() . '/css/main.css');
+        wp_enqueue_style('bootstrap-style', get_template_directory_uri() . '/css/bootstrap.css', array(), '3.3.7');
+        wp_enqueue_style('bootstrap-theme-style', get_template_directory_uri() . '/css/bootstrap-theme.css', array(), '3.3.7');
 
         wp_enqueue_script('modernizr-script', get_template_directory_uri() . '/js/vendor/modernizr.min.js', array(), '3.3.1');
         wp_register_script('respond-script', get_template_directory_uri() . '/js/vendor/respond.min.js', array(), '1.4.2');
@@ -186,6 +174,21 @@ if (!function_exists('bootstrapBasicEnqueueScripts')) {
 }
 add_action('wp_enqueue_scripts', 'bootstrapBasicEnqueueScripts');
 
+
+
+function load_style(){
+
+    wp_enqueue_style('swiper-css', get_template_directory_uri() . '/css/swiper.min.css');
+    wp_enqueue_style('fontawesome-css', get_template_directory_uri() . '/css/fontawesome.min.css');
+    wp_enqueue_style('brands-css', get_template_directory_uri() . '/css/brands.min.css');
+    wp_enqueue_style('solid-css', get_template_directory_uri() . '/css/solid.min.css');
+    wp_enqueue_style('slick-theme-css', get_template_directory_uri() . '/css/slick-theme.css');
+    wp_enqueue_style('slick-css', get_template_directory_uri() . '/css/slick.css');
+    wp_enqueue_style('preloader-css', get_template_directory_uri() . '/css/preloader.css');
+    wp_enqueue_style('style-css', get_template_directory_uri().'/css/style.css');
+
+}
+add_action('wp_enqueue_scripts', 'load_style');
 
 /**
  * admin page displaying help.
@@ -223,28 +226,167 @@ if (function_exists('acf_add_options_page')) {
 
 ########################### ДОБАВЛЕНИЕ POST_TYPE ###########
 
-//function post_type_service()
-//{
-//    $labels = array(
-//        'name' => 'Услуги',
-//        'singular_name' => 'Услуги',
-//        'all_items' => 'Услуги',
-//        'menu_name' => 'Услуги' // ссылка в меню в админке
-//    );
-//    $args = array(
-//        'labels' => $labels,
-//        'public' => true,
-//        'menu_position' => 5,
-//        'has_archive' => true,
-//        'query_var' => "service",
-//        'supports' => array(
-//            'title',
-//            'thumbnail'
-//        )
-//    );
-//    register_post_type('service', $args);
-//}
-//add_action('init', 'post_type_service');
+function post_type_news()
+{
+    $labels = array(
+        'name' => 'Новости',
+        'singular_name' => 'Новости',
+        'all_items' => 'Новости',
+        'menu_name' => 'Новости' // ссылка в меню в админке
+    );
+    $args = array(
+        'labels' => $labels,
+        'public' => true,
+        'menu_position' => 5,
+        'has_archive' => true,
+        'query_var' => "news",
+        'supports' => array(
+            'title',
+            'thumbnail'
+        )
+    );
+    register_post_type('news', $args);
+}
+add_action('init', 'post_type_news');
+
+
+function post_type_direction()
+{
+    $labels = array(
+        'name' => 'Направления',
+        'singular_name' => 'Направления',
+        'all_items' => 'Направления',
+        'menu_name' => 'Направления' // ссылка в меню в админке
+    );
+    $args = array(
+        'labels' => $labels,
+        'public' => true,
+        'menu_position' => 5,
+        'has_archive' => true,
+        'query_var' => "direction",
+        'supports' => array(
+            'title',
+            'thumbnail'
+        )
+    );
+    register_post_type('direction', $args);
+}
+add_action('init', 'post_type_direction');
+
+
+function post_type_product_slider()
+{
+    $labels = array(
+        'name' => 'Слайдер продукции',
+        'singular_name' => 'Слайдер продукции',
+        'all_items' => 'Слайдер продукции',
+        'menu_name' => 'Слайдер продукции' // ссылка в меню в админке
+    );
+    $args = array(
+        'labels' => $labels,
+        'public' => true,
+        'menu_position' => 5,
+        'has_archive' => true,
+        'query_var' => "product_slider",
+        'supports' => array(
+            'title',
+            'thumbnail'
+        )
+    );
+    register_post_type('product_slider', $args);
+}
+add_action('init', 'post_type_product_slider');
+
+
+function post_type_service()
+{
+    $labels = array(
+        'name' => 'Услуги',
+        'singular_name' => 'Услуги',
+        'all_items' => 'Услуги',
+        'menu_name' => 'Услуги' // ссылка в меню в админке
+    );
+    $args = array(
+        'labels' => $labels,
+        'public' => true,
+        'menu_position' => 5,
+        'has_archive' => true,
+        'query_var' => "service",
+        'supports' => array(
+            'title',
+            'thumbnail'
+        )
+    );
+    register_post_type('service', $args);
+}
+add_action('init', 'post_type_service');
+
+
+
+function post_type_product()
+{
+    $labels = array(
+        'name' => 'Товар',
+        'singular_name' => 'Товар',
+        'all_items' => 'Товар',
+        'menu_name' => 'Товар' // ссылка в меню в админке
+    );
+    $args = array(
+        'labels' => $labels,
+        'public' => true,
+        'menu_position' => 5,
+        'has_archive' => true,
+        'query_var' => "product",
+        'supports' => array(
+            'title',
+            'thumbnail'
+        )
+    );
+    register_post_type('product', $args);
+}
+add_action('init', 'post_type_product');
+
+
+
+add_action( 'init', 'create_topics_hierarchical_taxonomy', 0 );
+
+//create a custom taxonomy name it topics for your posts
+
+function create_topics_hierarchical_taxonomy() {
+
+
+
+    $labels = array(
+        'name' => __('Категории товара', 'theme' ),
+    'singular_name' => __('Topic', 'theme' ),
+    'search_items' =>  __( 'Search Topics' , 'theme'),
+    'all_items' => __( 'All Topics' , 'theme'),
+    'parent_item' => __( 'Принадлежит категории', 'theme' ),
+    'parent_item_colon' => __( 'Parent Topic:' , 'theme'),
+    'edit_item' => __( 'Edit Topic' , 'theme'),
+    'update_item' => __( 'Обновить категорию' , 'theme'),
+    'add_new_item' => __( 'Добавить новую категорию', 'theme' ),
+    'new_item_name' => __( 'New Topic Name', 'theme'),
+    'menu_name' => __( 'Категории товара', 'theme' ),
+  );
+
+// Now register the taxonomy
+
+  register_taxonomy('cat_products',array('product'), array(
+      'hierarchical' => true,
+      'labels' => $labels,
+      'show_ui' => true,
+      'show_admin_column' => true,
+      'query_var' => true,
+      'rewrite' => array( 'slug' => 'cat_product' ),
+  ));
+
+}
+
+
+
+
+
 
 /**
  * Custom template tags for this theme.

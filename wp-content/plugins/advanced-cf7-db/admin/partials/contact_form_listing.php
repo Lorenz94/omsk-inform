@@ -240,13 +240,42 @@ else{
 		//Call when any filter not active on Listing screen
 		else{
 			
-			$query = "SELECT * FROM `".VSZ_CF7_DATA_ENTRY_TABLE_NAME."` WHERE `cf7_id` = ".$fid." AND data_id IN(
-						SELECT * FROM (
-							SELECT data_id FROM `".VSZ_CF7_DATA_ENTRY_TABLE_NAME."` WHERE 1 = 1 AND `cf7_id` = ".$fid." 
-								GROUP BY `data_id` ORDER BY ".$cf7d_entry_order_by." LIMIT ".$offset.",".$items_per_page."
-							) 
-						temp_table) 
-						ORDER BY " . $cf7d_entry_order_by;
+			if(isset($_GET["orderby"]) && isset($_GET["order"]) && !empty($_GET["orderby"]) && !empty($_GET["order"])){
+				$qry = "SELECT `data_id` FROM `".VSZ_CF7_DATA_ENTRY_TABLE_NAME."` WHERE `cf7_id` = ".$fid." AND `name` = '".$_GET['orderby']."' AND data_id IN(
+										SELECT * FROM (
+											SELECT data_id FROM `".VSZ_CF7_DATA_ENTRY_TABLE_NAME."` WHERE 1 = 1 AND `cf7_id` = ".$fid." 
+											GROUP BY `data_id` ORDER BY ".$cf7d_entry_order_by." LIMIT ".$offset.",".$items_per_page."
+										) 
+										temp_table) 
+										ORDER BY `value` ".$_GET["order"]."," . $cf7d_entry_order_by;
+				$idVals = $wpdb->get_results ( $qry );
+				$id_val = array();
+				if(!empty($idVals)){
+					foreach($idVals as $o_id){
+						$id_val[] = $o_id->data_id;
+					}
+				}
+				
+				$query = "SELECT * FROM `".VSZ_CF7_DATA_ENTRY_TABLE_NAME."` WHERE `cf7_id` = ".$fid." AND data_id IN(
+							SELECT * FROM (
+								SELECT data_id FROM `".VSZ_CF7_DATA_ENTRY_TABLE_NAME."` WHERE 1 = 1 AND `cf7_id` = ".$fid." 
+									GROUP BY `data_id` ORDER BY ".$cf7d_entry_order_by." LIMIT ".$offset.",".$items_per_page."
+								) 
+							temp_table) 
+							ORDER BY FIELD(`data_id`, ". implode(',',$id_val) ." )";
+				
+			}
+			else{
+				$query = "SELECT * FROM `".VSZ_CF7_DATA_ENTRY_TABLE_NAME."` WHERE `cf7_id` = ".$fid." AND data_id IN(
+							SELECT * FROM (
+								SELECT data_id FROM `".VSZ_CF7_DATA_ENTRY_TABLE_NAME."` WHERE 1 = 1 AND `cf7_id` = ".$fid." 
+									GROUP BY `data_id` ORDER BY ".$cf7d_entry_order_by." LIMIT ".$offset.",".$items_per_page."
+								) 
+							temp_table) 
+							ORDER BY " . $cf7d_entry_order_by;
+
+			}
+			
 			//Get total entries information
 			$arr_total = $wpdb->get_results("SELECT data_id FROM `".VSZ_CF7_DATA_ENTRY_TABLE_NAME."` WHERE `cf7_id` = " .$fid . " ".((!empty($search)) ? "AND `value` LIKE '%%".$search."%%'" : "")." GROUP BY `data_id`");
 		}

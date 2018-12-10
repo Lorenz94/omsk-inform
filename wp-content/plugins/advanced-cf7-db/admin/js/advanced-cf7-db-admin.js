@@ -421,7 +421,16 @@ function add_remove_file(index,filename){
 										},
 
 										success: function(data) {
-											if(data != "invalid_size"){
+											if(data == "Not_accessed_to_upload_file"){
+												alert("You do not have permission to upload files.");
+											}
+											else if(data == "invalid_type"){
+												alert("Invalid file type.");
+											}
+											else if(data == "invalid_size"){
+												alert("Maximum file size allowed is 7.60 MB.");
+											}
+											else{
 												dataArr = data.split("~~@@~~&&~~");
 												
 												var filename = dataArr[0];
@@ -437,9 +446,6 @@ function add_remove_file(index,filename){
 												
 												// Calling function which will handle the removal and new upload of the files
 												add_remove_file(index,filename);
-											}
-											else{
-												alert("Maximum file size allowed is 7.60 MB.");
 											}
 											
 											document.getElementById('overlayLoader').style.display = "none";
@@ -503,7 +509,16 @@ function add_remove_file(index,filename){
 					},
 
 					success: function(data) {
-						if(data != "invalid_size"){
+						if(data == "Not_accessed_to_upload_file"){
+							alert("You do not have permission to upload files.");
+						}
+						else if(data == "invalid_type"){
+							alert("Invalid file type.");
+						}
+						else if(data == "invalid_size"){
+							alert("Maximum file size allowed is 7.60 MB.");
+						}
+						else{
 							dataArr = data.split("~~@@~~&&~~");
 							
 							var filename = dataArr[0];
@@ -519,9 +534,6 @@ function add_remove_file(index,filename){
 							
 							// Calling function which will handle the removal and new upload of the files
 							add_remove_file(index,filename);
-						}
-						else{
-							alert("Maximum file size allowed is 7.60 MB.");
 						}
 						
 						document.getElementById('overlayLoader').style.display = "none";
@@ -583,3 +595,29 @@ jQuery(document).ready(function() {
 		}
 	});
 });
+
+/******************************************** Shortcode Related Functionality **************************************************/
+
+function get_list_fields(form_id){
+	jQuery.ajax({
+		url: ajaxurl,
+		type: 'POST',
+		data : fd,
+		processData: false,
+		contentType: false,
+		beforeSend: function() {
+			document.getElementById('overlayLoader').style.display = "block";
+		},
+		success: function(data) {
+			
+			alert(data);
+			
+			document.getElementById('overlayLoader').style.display = "none";
+		},
+		error: function(data){
+			console.log(data);
+			document.getElementById('overlayLoader').style.display = "none";
+			return false;
+		}
+	});
+}

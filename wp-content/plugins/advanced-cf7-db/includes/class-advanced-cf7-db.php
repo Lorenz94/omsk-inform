@@ -128,7 +128,7 @@ class Advanced_Cf7_Db {
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
-		
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-advanced-cf7-db-public.php';
 
 		$this->loader = new Advanced_Cf7_Db_Loader();
 
@@ -225,8 +225,14 @@ class Advanced_Cf7_Db {
 	 * @access   private
 	 */
 	private function define_public_hooks() {
-
 		
+		$plugin_public = new Advanced_Cf7_Db_Public( $this->get_plugin_name(), $this->get_version() );
+
+		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_public, 'enqueue_styles' );
+		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+		
+		// Register shortcode
+		$this->loader->add_action( 'after_setup_theme',$plugin_public,'vsz_acf7_db_register_shortcode' );
 
 	}
 

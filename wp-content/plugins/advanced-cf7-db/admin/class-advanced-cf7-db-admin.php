@@ -155,18 +155,32 @@ class Advanced_Cf7_Db_Admin {
 		add_menu_page( "Advanced CF7 DB", "Advanced CF7 DB", $cap, "contact-form-listing", array($this,"vsz_contact_form_callback"), 'dashicons-visibility' , 45);
 		///// Menu pages for Import CSV
 		add_submenu_page( 'contact-form-listing', __('Import CSV', 'advanced-cf7-db'), __('Import CSV', ' advanced-cf7-db'), $cap, 'import_cf7_csv',array($this,'vsz_import_cf7_csv') );
+		add_submenu_page( 'contact-form-listing', __('Developer Support', 'advanced-cf7-db'), __('Developer Support', ' advanced-cf7-db'), $cap, 'shortcode',array($this,'vsz_shortcode') );
+		add_submenu_page( 'contact-form-listing', __('Add-ons', 'advanced-cf7-db'), __('Add-ons', ' advanced-cf7-db'), $cap, 'extentions',array($this,'vsz_extension') );
 	}
 
 	// Callback function for listing screen
 	function vsz_contact_form_callback(){
 		//Check current user permission
 
-/* 		if (!current_user_can('manage_options'))  {
+		/* if (!current_user_can('manage_options'))  {
 			wp_die( __('You do not have sufficient permissions to access this page.') );
 		} */
 		wp_enqueue_style('vsz-cf7-db-admin-css');
 		//Define all entry related design in this file
 		require_once plugin_dir_path( __FILE__ ) . 'partials/contact_form_listing.php';
+	}
+
+	// Callback function for Import CSV screen
+	function vsz_shortcode(){
+		//Define import CSV screen design in this file
+		require_once plugin_dir_path( __FILE__ ) . 'partials/developer_support.php';
+	}
+
+	// Callback function for Import CSV screen
+	function vsz_extension(){
+		//Define import CSV screen design in this file
+		require_once plugin_dir_path( __FILE__ ) . 'partials/add-ons.php';
 	}
 
 	// Callback function for Import CSV screen
@@ -836,6 +850,13 @@ class Advanced_Cf7_Db_Admin {
 	////Define not editable fields name here
 	public function vsz_cf7_not_editable_fields_callback(){
 		$cf7_not_editable_fields = array('submit_time','submit_ip','submit_user_id');
+		
+		if(!empty($non_editable)){
+			foreach($non_editable as $val){
+				$cf7_not_editable_fields[] = $val;
+			}
+		}
+		
 		return $cf7_not_editable_fields;
 	}
 
@@ -969,6 +990,15 @@ class Advanced_Cf7_Db_Admin {
 	// Function to upload file from edit file popup
 	function vsz_acf7_db_edit_scr_file_upload(){
 
+		// Verify the current user can upload files
+		if (!current_user_can('upload_files')){
+			print 'Not_accessed_to_upload_file';
+			wp_die(__('You do not have permission to upload files.'));
+		}
+		if(isset($_FILES) && is_array($_FILES) && !empty($_FILES)){
+			print 'Not_accessed_to_upload_file';
+			exit;
+		}
 		if(!isset($_POST["fid"]) || empty($_POST["fid"])){
 			print 'error';
 			exit;
@@ -979,6 +1009,11 @@ class Advanced_Cf7_Db_Admin {
 		}
 		if(!isset($_POST["field"]) || empty($_POST["field"])){
 			print 'error';
+			exit;
+		}
+		$fileInfo = wp_check_filetype(basename($_FILES['image']['name']));
+		if (empty($fileInfo['ext'])) {
+			print 'Invalid_file_type._File_type_not_defined.';
 			exit;
 		}
 
@@ -994,13 +1029,21 @@ class Advanced_Cf7_Db_Admin {
 
 		if(is_array($_FILES) && !empty($_FILES)){
 			$maxsize = 8000000;
-			if(($_FILES['image']['size'] >= $maxsize)) {
+			if(($_FILES['image']['size'] >= $maxsize) || empty($_FILES['image']['size'])) {
 				echo  'invalid_size';
 				exit;
 			}
 			$filename = sanitize_text_field($_FILES["image"]["name"]);
 			$file_basename = substr($filename, 0, strripos($filename, '.')); // get file name
 			$file_ext = substr($filename, strripos($filename, '.')); // get file extention
+
+			$validExtArray = array( 'jpg','jpeg','png','gif','pdf','doc','docx','ppt','pptx','odt','avi','ogg','m4a','mov','mp3','mp4','mpg','wav','wmv');
+			$ext = end((explode(".", $filename)));
+			if(!in_array($ext,$validExtArray)){
+				echo  'invalid_type';
+				exit;
+			}
+
 			//unique file name
 			$newfilename = wp_unique_filename($temp_dir_upload, $file_basename.$file_ext);
 

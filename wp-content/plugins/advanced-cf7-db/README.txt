@@ -3,7 +3,7 @@ Contributors: vsourz1td
 Tags: contact form 7 db, advanced cf7 db, contact form 7 database, contact form db, contact form 7, save form data, save contact form, save cf7, database, cf7db, save-contact-form, Save-Forms-Data, import-cf7, export-contact-data, view-cf7-entry
 Requires at least: 4.0
 Tested up to: 4.9.8
-Stable tag: 1.4.4
+Stable tag: 1.5.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -38,6 +38,9 @@ Attached files are stored in the /wp-content/uploads/advanced-cf7-upload directo
 * Facility to import form related entries from CSV file.
 * Provided filters for excluding particular contact form entry to CF7 DB.
 * Provided filter to add,modify,remove CF7 fields and data before submitting to CF7 DB.
+* You can display the contact form DB data to user by using shortcodes.
+* Generate shortcode using different parameters to display specific data only.
+* For more details checkout the plugin "Shortcode" screen.
 
 == Commercial Features ==
 **1. Advanced CF7 DB - GDPR compliant**
@@ -127,6 +130,9 @@ If you think, that you found a bug in our plugin or have any question contact us
 = Can I restrict the plugin from storing IP address of the user to contact form DB? =
 Yes, you can strict the plugin for storing IP address of the user.
 
+= Can I display contact form DB data to user ? =
+Yes, you can display contact form DB data to user. You can use short code for this purpose. For detail please visit "Shortcode" screen of plugin.
+
 = How to restrict the plugin from storing IP address of the user to contact form DB? =
 Restriction is simple, just code **do_shortcode( '[cf7-db-display-ip]' );** to be placed in theme folder functions.php. By placing the code the IP address of the user will not been stored. Step by step process is explained below :
 - Goto -> wp-content/themes/{active theme folder}/functions.php
@@ -158,9 +164,14 @@ function vsz_restrict_form_data_submission($contact_form_ids){
 3. Edit information popup screen.
 4. Setup import file fields.
 5. Import CSV file.
+6. Developer Support
 
 
 == Changelog ==
+
+= 1.5.0 =
+* **Developer Support:** Provide screen for the developer to manage Display Enquiry, Ban IP and Actions & Filters.
+* **Add-ons:** Provision to select other add-ons of Advanced CF7 DB.
 
 = 1.4.4 =
 * Fixed issue related to export records in PDF.
