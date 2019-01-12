@@ -1,15 +1,17 @@
+
 <?php
 /**
- * Template Name: Main Page
- * Template Post Type: page
+ * Category Template: Grid
  */
-
+?>
 get_header();
 ?>
 
 
 
+<?php
 
+?>
     <section id="news">
         <div class="container">
             <div class="b-news-slider">
@@ -24,7 +26,7 @@ get_header();
                             <div class="type middle-text"><?php echo get_field('news_type', $id); ?></div>
                             <div class="title large-text"><?php echo get_field('news_title', $id); ?></div>
                             <div class="link">
-                                <a href="<?php echo get_the_permalink($id);?>" class="middle-text">Подробнее</a>
+                                <a href="#" class="middle-text">Подробнее</a>
                             </div>
                         </div>
                     </div>
@@ -42,7 +44,7 @@ get_header();
                 <div class="direction-menu-top">
                     <?php foreach (get_field('main_direction_top') as $id) { ?>
 
-                        <a href="<?php echo get_the_permalink($id); ?>" class="small-text">
+                        <a href="#" class="small-text">
                             <div class="direction-icon">
                                 <img src="<?php echo get_field('direction_icon', $id)['url']; ?>" alt="">
                             </div>
@@ -62,7 +64,8 @@ get_header();
             <div class="container">
                 <div class="direction-menu-bottom">
                     <?php foreach (get_field('main_direction_bottom') as $id) { ?>
-                        <a href="<?php echo get_the_permalink($id); ?>" class="small-text">
+
+                        <a href="#" class="small-text">
                             <div class="direction-icon">
                                 <img src="<?php echo get_field('direction_icon', $id)['url']; ?>" alt="">
                             </div>
@@ -79,7 +82,7 @@ get_header();
     </section>
 
 
-    <?php require_once ('/wp-content/themes/theme/product_slider.php'); ?>
+<?php require_once ('/wp-content/themes/theme/product_slider.php'); ?>
 
 
 <?php get_footer(); ?>

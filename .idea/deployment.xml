@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" serverName="Omsk-inform">
+    <serverData>
+      <paths name="Omsk-inform">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+          <excludedPaths>
+            <excludedPath path="/wp-config.php" />
+            <excludedPath path="/.gitignore" />
+            <excludedPath path="/.htaccess" />
+            <excludedPath path="/index.php" />
+            <excludedPath path="/license.txt" />
+            <excludedPath path="/readme.html" />
+            <excludedPath path="/README.md" />
+            <excludedPath path="/wp-activate.php" />
+            <excludedPath path="/wp-blog-header.php" />
+            <excludedPath path="/wp-comments-post.php" />
+            <excludedPath path="/wp-config-sample.php" />
+            <excludedPath path="/wp-cron.php" />
+            <excludedPath path="/wp-links-opml.php" />
+            <excludedPath path="/wp-load.php" />
+            <excludedPath path="/wp-login.php" />
+            <excludedPath path="/wp-mail.php" />
+            <excludedPath path="/wp-settings.php" />
+            <excludedPath path="/wp-signup.php" />
+            <excludedPath path="/wp-trackback.php" />
+            <excludedPath path="/xmlrpc.php" />
+            <excludedPath path="/wp-includes" />
+            <excludedPath path="/wp-admin" />
+            <excludedPath path="/wp-content/languages" />
+          </excludedPaths>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>

@@ -14,7 +14,7 @@
                         <img src="<?php echo get_field('logo', 'options')['url']; ?>" alt="">
                     </div>
                     <div class="copyright">
-                        Образование Информ © 2018г. </br>
+                        Образование Информ © 2019г. </br>
                         Все права защищены.
                     </div>
                     <div class="footer-info-link">
@@ -66,8 +66,8 @@
                         ));
                         $parentsID = array();
                         foreach ($categories as $item) {
-                            if ($item->parent == 0) {
-                                ?> <a href="#" class="small-text"><?php echo $item->name; ?></a> <?php
+                            if ($item->parent == 0) { ?>
+                                <a href="<?php echo get_category_link($item->term_id); ?>" class="small-text"><?php echo $item->name; ?></a> <?php
                             }
                         }
                         ?>
@@ -90,7 +90,7 @@
                         $postslist = get_posts($args); ?>
 
                         <?php foreach ($postslist as $item) { ?>
-                            <a href="#" class="small-text"><?php echo get_field('direction_name', $item->ID); ?></a>
+                            <a href="<?php echo get_the_permalink($item->ID) ?>" class="small-text"><?php echo get_field('direction_name', $item->ID); ?></a>
                         <?php } ?>
                     </div>
                 </div>

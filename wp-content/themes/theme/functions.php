@@ -378,7 +378,7 @@ function create_topics_hierarchical_taxonomy() {
       'show_ui' => true,
       'show_admin_column' => true,
       'query_var' => true,
-      'rewrite' => array( 'slug' => 'cat_product' ),
+      'rewrite' => array( 'slug' => 'product-category' ),
   ));
 
 }
